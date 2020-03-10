@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -26,38 +25,24 @@ public abstract class AbstractEntityController<E extends AbstractEntity, D exten
 
     @GetMapping
     public ResponseEntity<Page<D>> findAll(@PageableDefault Pageable pageable) {
-        Page<D> dtoPage = service.findAll(pageable).map(mapper::toDto);
-        return new ResponseEntity<>(dtoPage, HttpStatus.OK);
+        return new ResponseEntity<>(service.findAll(pageable).map(mapper::toDto), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<D> create(@RequestBody D entityDto) {
-        E entity = mapper.toEntity(entityDto);
-        entity = service.create(entity);
-        entityDto = mapper.toDto(entity);
-        return new ResponseEntity<>(entityDto, HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDto(service.create(mapper.toEntity(entityDto))), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<D> retrieve(@PathVariable(value = "id") UUID id) {
-        E entity = service.retrieve(id);
-        if (entity == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        D entityDto = mapper.toDto(entity);
-        return new ResponseEntity<>(entityDto, HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDto(service.retrieve(id)), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<D> update(@PathVariable(value = "id") UUID id, @RequestBody D entityDto) {
         E entity = service.retrieve(id);
-        if (entity == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
         mapper.updateEntityFromDto(entityDto, entity);
-        entity = service.update(entity);
-        entityDto = mapper.toDto(entity);
-        return new ResponseEntity<>(entityDto, HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDto(service.update(entity)), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
