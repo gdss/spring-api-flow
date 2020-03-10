@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.UUID;
 
-public interface AbstractEntityRepository<E extends AbstractEntity> extends JpaRepository<E, UUID>, JpaSpecificationExecutor {
+public interface AbstractEntityRepository<E extends AbstractEntity> extends JpaRepository<E, UUID>, JpaSpecificationExecutor<E> {
 }

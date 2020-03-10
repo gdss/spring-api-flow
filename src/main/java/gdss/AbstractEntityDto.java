@@ -1,35 +1,35 @@
 package gdss;
 
-public class AbstractEntityDto {
+public abstract class AbstractEntityDto {
 
-	protected String id;
+    private String id;
 
-	protected String createdDate;
+    protected String createdDate;
 
-	protected String lastModifiedDate;
+    protected String lastModifiedDate;
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getCreatedDate() {
-		return createdDate;
-	}
+    public String getCreatedDate() {
+        return createdDate;
+    }
 
-	public void setCreatedDate(String createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public String getLastModifiedDate() {
-		return lastModifiedDate;
-	}
+    public String getLastModifiedDate() {
+        return lastModifiedDate;
+    }
 
-	public void setLastModifiedDate(String lastModifiedDate) {
-		this.lastModifiedDate = lastModifiedDate;
-	}
+    public void setLastModifiedDate(String lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
 
 }
